@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+>
+
+<meta
+    name="theme-color"
+    content="#f7f7f5"
+>
+
+<link 
+    rel="icon" 
+    href="images/favicon.ico"
+>
+<link 
+    rel="apple-touch-icon" 
+    href="images/icon-512.png"
+>
+
+<link
+    rel="manifest"
+    href="manifest.json"
+>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<title>Mein Budget</title>
+
+</head>
+
+<body>
+
+<main class="app">
+
+<header>
+
+    <h1>Mein Budget</h1>
+
+    <div
+        id="periodLabel"
+        class="period-label"
+    ></div>
+
+</header>
+
+
+<section class="card hero">
+
+    <div class="eyebrow">
+        Noch verfügbar
+    </div>
+
+    <div
+        id="remaining"
+        class="remaining"
+    >
+        0,00 €
+    </div>
+
+    <div
+        id="daily"
+        class="daily"
+    >
+        0,00 € pro Tag
+    </div>
+
+    <div
+        id="days"
+        class="days"
+    ></div>
+
+    <div class="progress">
+        <div id="progressBar"></div>
+    </div>
+
+</section>
+
+
+<section class="card summary">
+
+    <div>
+        <span>Budget</span>
+
+        <strong id="budgetValue">
+            0,00 €
+        </strong>
+    </div>
+
+    <div>
+        <span>Ausgaben</span>
+
+        <strong id="spentValue">
+            0,00 €
+        </strong>
+    </div>
+
+</section>
+
+
+<button
+    id="addBtn"
+    class="primary"
+>
+    ＋ Ausgabe erfassen
+</button>
+
+
+<section class="quick">
+
+    <div>
+
+        <span>Heute</span>
+
+        <strong id="todayValue">
+            0,00 €
+        </strong>
+
+    </div>
+
+</section>
+
+
+<section class="list-section">
+
+    <div class="section-title">
+
+        <h2>Ausgaben</h2>
+
+        <button
+            id="settingsBtn"
+            class="icon-btn"
+        >
+            ⚙︎
+        </button>
+
+    </div>
+
+    <div id="expenses"></div>
+
+</section>
+
+</main>
+
+
+<!-- Budget -->
+
+<dialog id="budgetDialog">
+
+<form
+    method="dialog"
+    id="budgetForm"
+    class="dialog-card"
+>
+
+    <h2>Budget festlegen</h2>
+
+    <label>
+        Verfügbarer Betrag
+    </label>
+
+    <div class="money-input">
+
+        <input
+            id="budgetInput"
+            type="number"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            required
+        >
+
+        €
+
+    </div>
+
+    <div class="dialog-actions">
+
+        <button
+            value="cancel"
+            class="secondary"
+        >
+            Abbrechen
+        </button>
+
+        <button
+            value="save"
+            class="primary small"
+        >
+            Speichern
+        </button>
+
+    </div>
+
+</form>
+
+</dialog>
+
+
+<!-- Ausgabe -->
+
+<dialog id="expenseDialog">
+
+<form
+    method="dialog"
+    id="expenseForm"
+    class="dialog-card"
+>
+
+    <h2 id="expenseTitle">
+        Neue Ausgabe
+    </h2>
+
+    <input
+        type="hidden"
+        id="expenseId"
+    >
+
+    <label>
+        Betrag
+    </label>
+
+    <div class="money-input">
+
+        <input
+            id="expenseAmount"
+            type="number"
+            min="0.01"
+            step="0.01"
+            inputmode="decimal"
+            required
+        >
+
+        €
+
+    </div>
+
+    <label>
+        Kategorie
+    </label>
+
+    <select id="expenseCategory">
+
+        <option>Lebensmittel</option>
+        <option>Haushalt</option>
+        <option>Drogerie</option>
+        <option>Auto</option>
+        <option>Freizeit</option>
+        <option>Kleidung</option>
+        <option>Gesundheit</option>
+        <option>Sonstiges</option>
+
+    </select>
+
+    <label>
+        Notiz
+        <span>(optional)</span>
+    </label>
+
+    <input
+        id="expenseNote"
+        type="text"
+        maxlength="80"
+        placeholder="z. B. Einkauf"
+    >
+
+    <div class="dialog-actions">
+
+        <button
+            value="cancel"
+            class="secondary"
+        >
+            Abbrechen
+        </button>
+
+        <button
+            value="save"
+            class="primary small"
+        >
+            Speichern
+        </button>
+
+    </div>
+
+</form>
+
+</dialog>
+
+
+<!-- Einstellungen -->
+
+<dialog id="settingsDialog">
+
+<form
+    method="dialog"
+    class="dialog-card"
+>
+
+    <h2>Daten</h2>
+
+    <p class="hint">
+        Die Daten werden lokal gespeichert.
+        Mit Export kannst du eine Sicherung erstellen.
+    </p>
+
+    <button
+        id="exportBtn"
+        value="export"
+        class="secondary"
+    >
+        Daten exportieren
+    </button>
+
+    <label class="import-label">
+
+        Daten importieren
+
+        <input
+            id="importInput"
+            type="file"
+            accept=".json,application/json"
+        >
+
+    </label>
+
+    <div class="dialog-actions">
+
+        <button
+            value="cancel"
+            class="primary small"
+        >
+            Schließen
+        </button>
+
+    </div>
+
+</form>
+
+</dialog>
+
+
+<script src="app.js"></script>
+
+</body>
+
+</html>
